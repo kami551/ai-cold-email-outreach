@@ -1,0 +1,1053 @@
+{
+  "name": "Project 4 — Lead Gen Outreach",
+  "nodes": [
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1vHCdYh5CJd9TY5rvX3euj7kgqErUvh0-pQ-h7Ir5cFs",
+          "mode": "list",
+          "cachedResultName": "Lead_Outreach",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1vHCdYh5CJd9TY5rvX3euj7kgqErUvh0-pQ-h7Ir5cFs/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1vHCdYh5CJd9TY5rvX3euj7kgqErUvh0-pQ-h7Ir5cFs/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -2352,
+        192
+      ],
+      "id": "906e9a92-db58-4128-b8fa-2da8f4c0dc6f",
+      "name": "Get row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "gEUdZ91e0K7gBvpu",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -1824,
+        192
+      ],
+      "id": "f85038f2-ae5b-4a09-bc96-8abba4d58294",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Loop Over Items').item.json.email }}",
+        "subject": "={{ $json.output.subject }}",
+        "emailType": "text",
+        "message": "={{ $json.output.body }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        -560,
+        176
+      ],
+      "id": "696f9a68-65c3-4351-a7a5-0513219b930c",
+      "name": "Send a message",
+      "webhookId": "d93262db-bffa-4f0f-9333-fd4ac2c05fc8",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "MPP6tW5mo8Vrq4kW",
+          "name": "Gmail OAuth2 API"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1vHCdYh5CJd9TY5rvX3euj7kgqErUvh0-pQ-h7Ir5cFs",
+          "mode": "list",
+          "cachedResultName": "Lead_Outreach",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1vHCdYh5CJd9TY5rvX3euj7kgqErUvh0-pQ-h7Ir5cFs/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1vHCdYh5CJd9TY5rvX3euj7kgqErUvh0-pQ-h7Ir5cFs/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "email": "={{ $('Loop Over Items').item.json.email }}",
+            "retry_count": "={{ $json.retry_count || 0 }}",
+            "email_status": "sent",
+            "sent_timestamp": "={{ $now.toISO() }}"
+          },
+          "matchingColumns": [
+            "email"
+          ],
+          "schema": [
+            {
+              "id": "first_name",
+              "displayName": "first_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "company_name",
+              "displayName": "company_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "website",
+              "displayName": "website",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "industry",
+              "displayName": "industry",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "role",
+              "displayName": "role",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "phone",
+              "displayName": "phone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "city",
+              "displayName": "city",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "email_status",
+              "displayName": "email_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "retry_count",
+              "displayName": "retry_count",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "error_log",
+              "displayName": "error_log",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "sent_timestamp",
+              "displayName": "sent_timestamp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -384,
+        160
+      ],
+      "id": "72005fc9-89f0-49ec-9c7d-ed415ddb90a9",
+      "name": "Update row in sheet",
+      "alwaysOutputData": false,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "3kv3DbtGABPJhfVt",
+          "name": "Google Sheets account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.website }}",
+        "options": {
+          "timeout": 20000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        -1456,
+        208
+      ],
+      "id": "f68b4c6f-89a0-4e0e-b4da-56ae9a53db14",
+      "name": "Web Scrapper",
+      "retryOnFail": false,
+      "waitBetweenTries": 5000,
+      "executeOnce": false,
+      "alwaysOutputData": false,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "amount": "={{ $json._index * 8000 }}"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -1456,
+        -336
+      ],
+      "id": "6e81a623-fb02-4ef8-bf42-70a8c43ee52b",
+      "name": "Wait",
+      "webhookId": "f86a6e10-c251-4a64-b0ae-0d3fc3df1e10"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const item = $input.item.json;\nconst rawHtml = item.data || item.body || \"\";\n\n// Guard clause: Return empty string if input is empty or invalid\nif (!rawHtml || typeof rawHtml !== 'string' || rawHtml.trim() === '') {\n    return {\n        json: {\n            ...item,\n            clean_website_text: \"\"\n        }\n    };\n}\n\n// 1. Strip non-content blocks (scripts, styles, headers, footers, SVGs)\nlet clean = rawHtml\n    .replace(/<script[\\s\\S]*?<\\/script>/gi, \"\")\n    .replace(/<style[\\s\\S]*?<\\/style>/gi, \"\")\n    .replace(/<svg[\\s\\S]*?<\\/svg>/gi, \"\")\n    .replace(/<noscript[\\s\\S]*?<\\/noscript>/gi, \"\")\n    .replace(/<header[\\s\\S]*?<\\/header>/gi, \"\") // Removes top navigation menus\n    .replace(/<footer[\\s\\S]*?<\\/footer>/gi, \"\"); // Removes privacy policies/social links in footer\n\n// 2. Strip HTML tags\nclean = clean.replace(/<[^>]+>/g, \" \");\n\n// 3. Decode common HTML entities to make text natural for Gemini\nconst entities = {\n    '&nbsp;': ' ', '&amp;': '&', '&lt;': '<', '&gt;': '>',\n    '&quot;': '\"', '&#39;': \"'\", '&apos;': \"'\", '&ndash;': '-',\n    '&mdash;': '-', '&copy;': ''\n};\nfor (const [entity, replacement] of Object.entries(entities)) {\n    clean = clean.replaceAll(entity, replacement);\n}\n\n// 4. Normalize spacing and remove backslashes\nclean = clean\n    .replace(/\\s+/g, \" \")\n    .replace(/\\\\/g, \"\")\n    .trim();\n\n// 5. Restrict to a safe context size (e.g., 2000 characters) to save Gemini free tier tokens\nclean = clean.substring(0, 2000);\n\nreturn {\n    json: {\n        ...item,\n        clean_website_text: clean\n    }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1280,
+        192
+      ],
+      "id": "21a4b60a-8d4a-4c12-b1e0-7840459602d2",
+      "name": "Clean HTML"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "try {\n    const item = $input.item.json;\n    let rawText = '';\n    if (item.content && item.content.parts && item.content.parts.length > 0) {\n        rawText = item.content.parts[0].text || '';\n    }\n    if (!rawText) {\n        return {\n            json: {\n                ...item,\n                subject: '',\n                body: '',\n                parse_error: 'Empty response from Gemini'\n            }\n        };\n    }\n    const cleanedString = rawText.replace(/```json|```/g, '').trim();\n    const emailData = JSON.parse(cleanedString);\n    return {\n        json: {\n            ...item,\n            subject: emailData.subject || '',\n            body: emailData.body || '',\n            parse_error: ''\n        }\n    };\n} catch (error) {\n    const item = $input.item.json;\n    return {\n        json: {\n            ...item,\n            subject: '',\n            body: '',\n            parse_error: 'Failed to parse Gemini response: ' + String(error)\n        }\n    };\n}"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1952,
+        -432
+      ],
+      "id": "8b3d6aee-332c-42b9-8d47-8c09b8facc51",
+      "name": "Email Content Parser"
+    },
+    {
+      "parameters": {
+        "amount": "={{ $json._wait_ms }}"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -2176,
+        -432
+      ],
+      "id": "9dc22cc8-104c-4ef0-8948-5c58f40ae3e4",
+      "name": "Dynamic Retry Wait",
+      "webhookId": "5fccca44-8853-4fc3-b3e8-0cb91dc17924"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1vHCdYh5CJd9TY5rvX3euj7kgqErUvh0-pQ-h7Ir5cFs",
+          "mode": "list",
+          "cachedResultName": "Lead_Outreach",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1vHCdYh5CJd9TY5rvX3euj7kgqErUvh0-pQ-h7Ir5cFs/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1vHCdYh5CJd9TY5rvX3euj7kgqErUvh0-pQ-h7Ir5cFs/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "email": "={{ $('Loop Over Items').item.json.email }}",
+            "retry_count": "={{$json.retry_count}}",
+            "error_log": "={{$json.error_log}}",
+            "email_status": "={{ $json._new_status }}"
+          },
+          "matchingColumns": [
+            "email"
+          ],
+          "schema": [
+            {
+              "id": "first_name",
+              "displayName": "first_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "company_name",
+              "displayName": "company_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "website",
+              "displayName": "website",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "industry",
+              "displayName": "industry",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "role",
+              "displayName": "role",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "phone",
+              "displayName": "phone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "city",
+              "displayName": "city",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "email_status",
+              "displayName": "email_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "retry_count",
+              "displayName": "retry_count",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "error_log",
+              "displayName": "error_log",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "sent_timestamp",
+              "displayName": "sent_timestamp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -704,
+        480
+      ],
+      "id": "fdf804fc-f0c4-4e02-9a6b-5fa0ac845811",
+      "name": "Mark as Permanently Failed",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "gFUBRWPb4Xij6q2S",
+          "name": "Google Sheets account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "76f26482-cd3b-4a38-96f4-f65ec2067e43",
+              "leftValue": "={{ $json.website }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -1632,
+        -80
+      ],
+      "id": "e2356950-a5c6-4327-b2af-0fe82c863da0",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 1
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -2528,
+        192
+      ],
+      "id": "b626f78f-9439-4ed4-815a-0a30cdcc07f8",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "fffa9df7-5c35-400f-8bfc-51b1b4f04901",
+              "leftValue": "={{ $json.email_status }}",
+              "rightValue": "pending",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "73dcbe61-2241-4c8e-9d8a-6fb11277158b",
+              "leftValue": "={{ $json.email_status }}",
+              "rightValue": "retry_later",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.3,
+      "position": [
+        -2176,
+        192
+      ],
+      "id": "00433d8e-a09e-4bc7-99b7-1f92cda7b14a",
+      "name": "Filter"
+    },
+    {
+      "parameters": {
+        "jsCode": "const delayPerLead = 8000; // 8 seconds between leads\nconst results = [];\n\nfor (let i = 0; i < $input.all().length; i++) {\n  // Add delay before processing (skip for first lead)\n  if (i > 0) {\n    const start = Date.now();\n    while (Date.now() - start < delayPerLead) {}\n  }\n  \n  results.push({\n    json: {\n      ...$input.all()[i].json,\n      _index: i\n    }\n  });\n}\n\nreturn results;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -2000,
+        192
+      ],
+      "id": "34385832-6168-4e61-af25-c43808d70dc8",
+      "name": "Index"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const item = $input.item.json;\n\nconst errorObj = item.error || {};\nlet errorMessage = '';\nlet httpStatusCode = 0;\n\nif (typeof errorObj === 'string') {\n    errorMessage = errorObj;\n} else if (typeof errorObj === 'object') {\n    errorMessage = errorObj.message || '';\n    httpStatusCode = errorObj.httpStatus || errorObj.status || errorObj.statusCode || 0;\n}\n\nif (!httpStatusCode && errorMessage) {\n    const statusMatch = errorMessage.match(/status\\s*(code)?\\s*:?\\s*(\\d{3})/i);\n    if (statusMatch) {\n        httpStatusCode = parseInt(statusMatch[2]);\n    }\n}\n\nconst currentRetryCount = parseInt(item.retry_count) || 0;\n\n// Detect error source from error message and item data\nlet errorSource = 'unknown';\n\nif (httpStatusCode === 401 || httpStatusCode === 403) {\n    if (errorMessage.toLowerCase().includes('generativelanguage') ||\n        errorMessage.toLowerCase().includes('gemini') ||\n        errorMessage.toLowerCase().includes('api_key') ||\n        errorMessage.toLowerCase().includes('api key')) {\n        errorSource = 'Gemini API';\n    } else {\n        errorSource = 'Gmail Send';\n    }\n} else if (errorMessage.toLowerCase().includes('gmail') ||\n           errorMessage.toLowerCase().includes('smtp') ||\n           errorMessage.toLowerCase().includes('recipient') ||\n           errorMessage.toLowerCase().includes('invalid email') ||\n           errorMessage.toLowerCase().includes('quota') ||\n           errorMessage.toLowerCase().includes('daily limit')) {\n    errorSource = 'Gmail Send';\n} else if (errorMessage.toLowerCase().includes('generativelanguage') ||\n           errorMessage.toLowerCase().includes('generative-ai') ||\n           errorMessage.toLowerCase().includes('gemini') ||\n           errorMessage.toLowerCase().includes('models/') ||\n           errorMessage.toLowerCase().includes('generatecontent')) {\n    errorSource = 'Gemini API';\n} else if (errorMessage.toLowerCase().includes('econnrefused') ||\n           errorMessage.toLowerCase().includes('econnreset') ||\n           errorMessage.toLowerCase().includes('enotfound') ||\n           errorMessage.toLowerCase().includes('getaddrinfo') ||\n           errorMessage.toLowerCase().includes('network')) {\n    if (item.clean_website_text !== undefined || item.website) {\n        errorSource = 'Scrape Website';\n    } else {\n        errorSource = 'Gemini API';\n    }\n} else if (errorMessage.toLowerCase().includes('timeout') ||\n           errorMessage.toLowerCase().includes('socket hang up')) {\n    if (item.clean_website_text !== undefined) {\n        errorSource = 'Scrape Website';\n    } else {\n        errorSource = 'Gemini API';\n    }\n} else if (errorMessage.toLowerCase().includes('url') ||\n           errorMessage.toLowerCase().includes('parameter')) {\n    errorSource = 'Scrape Website';\n} else {\n    if (item.subject !== undefined || item.body !== undefined) {\n        errorSource = 'Gmail Send';\n    } else if (item.clean_website_text !== undefined) {\n        errorSource = 'Gemini API';\n    } else {\n        errorSource = 'Scrape Website';\n    }\n}\n\n// Classify error type\nlet errorType;\n\nif (httpStatusCode === 429) {\n    errorType = 'retryable';\n} else if (httpStatusCode >= 500 && httpStatusCode <= 599) {\n    errorType = 'retryable';\n} else if (httpStatusCode === 404) {\n    errorType = 'permanent';\n} else if (httpStatusCode >= 400 && httpStatusCode < 500) {\n    errorType = 'permanent';\n} else if (errorMessage.toLowerCase().includes('timeout') ||\n           errorMessage.toLowerCase().includes('econnrefused') ||\n           errorMessage.toLowerCase().includes('econnreset') ||\n           errorMessage.toLowerCase().includes('network') ||\n           errorMessage.toLowerCase().includes('socket')) {\n    errorType = 'retryable';\n} else if (errorMessage.toLowerCase().includes('empty') ||\n           errorMessage.toLowerCase().includes('missing') ||\n           errorMessage.toLowerCase().includes('invalid parameter') ||\n           errorMessage.toLowerCase().includes('required') ||\n           errorMessage.toLowerCase().includes('cannot be empty')) {\n    errorType = 'permanent';\n} else {\n    errorType = 'retryable';\n}\n\n// Decide action\nlet action;\nlet newStatus;\nlet nextRetryCount;\n\nif (errorType === 'permanent') {\n    action = 'stop';\n    newStatus = 'FAILED_PERMANENTLY';\n    nextRetryCount = currentRetryCount + 1;\n} else if (currentRetryCount < 3) {\n    action = 'retry';\n    newStatus = 'retrying';\n    nextRetryCount = currentRetryCount + 1;\n} else {\n    action = 'stop';\n    newStatus = 'retry_later';\n    nextRetryCount = currentRetryCount;\n}\n\nconst waitMs = (action === 'retry')\n    ? Math.floor(Math.random() * 30000) + 30000\n    : 0;\n\nconst shortError = String(errorMessage).substring(0, 300);\n\nreturn {\n    json: {\n        ...item,\n        retry_count: nextRetryCount,\n        _action: action,\n        _new_status: newStatus,\n        _error_type: errorType,\n        _error_source: errorSource,\n        _wait_ms: waitMs,\n        _error_message: shortError,\n        error_log: '[' + errorSource + '] ' + errorType + ': ' + shortError\n    }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1136,
+        464
+      ],
+      "id": "52491f11-3898-4cc6-8bd1-814292034ca2",
+      "name": "Determine Status"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "2aebaf70-848b-45dd-a3ae-c22053085ffd",
+              "leftValue": "={{$json._action}}",
+              "rightValue": "retry",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -960,
+        464
+      ],
+      "id": "05a82a57-50ff-4163-87e9-0b179f980d71",
+      "name": "IF Can Retry"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a1428870-9018-4d55-b02b-e41f26f42360",
+              "name": "sender_name",
+              "value": "Kamran",
+              "type": "string"
+            },
+            {
+              "id": "72374083-5ebb-4880-9d8b-9dbe1c1080d4",
+              "name": "sender_company",
+              "value": "Your Company",
+              "type": "string"
+            },
+            {
+              "id": "78bd7a64-d168-4e31-a23e-2381b9825209",
+              "name": "sender_role",
+              "value": "Email Automation Specialist",
+              "type": "string"
+            },
+            {
+              "id": "3fb6201f-833a-4d1e-bea1-b43dfcc2f160",
+              "name": "pitch_description",
+              "value": "We help businesses automate their cold email outreach using AI",
+              "type": "string"
+            },
+            {
+              "id": "c9de767b-0bb2-4ae3-8c34-c67f51e1aee3",
+              "name": "clean_website_text",
+              "value": "\"\"",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1104,
+        192
+      ],
+      "id": "37ceccd3-94ee-4ebb-a5a6-a911b2d1e448",
+      "name": "Set Sender Info"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are an expert cold email copywriter. Write a personalized, natural-sounding cold email that sounds like a real professional writing to another professional.\n\nSTRICT RULES:\n- Do NOT sound like a marketer\n- Do NOT use ALL CAPS, emojis, exclamation marks in subject lines\n- Do NOT use clickbait or hype words (\"revolutionary\", \"game-changing\", \"cutting-edge\")\n- Keep the email body under 120 words (strict limit)\n- Use 5-8 short, clear sentences maximum\n- Return ONLY valid JSON with no markdown, no code blocks, no extra text\n- Format exactly: {\"subject\": \"...\", \"body\": \"...\"}\n\nRECIPIENT:\nName: {{ $('Loop Over Items').item.json.first_name }}\nRole: {{ $('Loop Over Items').item.json.role }}\nCompany: {{ $('Loop Over Items').item.json.company_name }}{{ $json.city ? ' in ' + $json.city : '' }}{{ $json.industry ? ' — ' + $json.industry + ' industry' : '' }}\n\nSENDER:\nName: {{ $json.sender_name }}\nCompany: {{ $json.sender_company }}\nRole: {{ $json.sender_role }}\nWhat you offer: {{ $json.pitch_description }}\n\n{{ $json.clean_website_text && $json.clean_website_text.length > 50 ? 'WEBSITE RESEARCH (use this to personalize — reference 1-2 specific details):\\n' + $json.clean_website_text : 'No website research available. Personalize using the recipient\\'s company name, role, and industry. Mention their company specifically — do not write generically.' }}\n\nINSTRUCTIONS:\n- Open with a specific observation about their company, role, or industry (not \"I hope this finds you well\")\n- Connect their context to what you offer in 1-2 sentences\n- End with a soft, low-friction CTA (a short question, not a demo request)\n- Sign off as: {{ $json.sender_name }}, {{ $json.sender_role }} at {{ $json.sender_company }}",
+        "hasOutputParser": true,
+        "batching": {
+          "batchSize": 1
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [
+        -944,
+        192
+      ],
+      "id": "4ab2f1be-981f-48db-b6a7-c69f18e9851f",
+      "name": "Basic LLM Chain",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-pro",
+        "options": {
+          "maxOutputTokens": 2048,
+          "temperature": 0.7,
+          "topP": 0.9
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        -736,
+        192
+      ],
+      "id": "bbce5880-74df-4dd1-b282-e001dd7f6af4",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "dPSgU0aSn5tOJeVB",
+          "name": "Google Gemini(PaLM) Api account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"subject\": {\n      \"type\": \"string\",\n      \"description\": \"Email subject line\"\n    },\n    \"body\": {\n      \"type\": \"string\",\n      \"description\": \"Full email body text\"\n    }\n  },\n  \"required\": [\"subject\", \"body\"]\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        -976,
+        -48
+      ],
+      "id": "54210f0b-e272-4d2b-ae94-308441b5a7f7",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Get wait time (max 15 sec for Cloud safety)\nconst waitMs = Math.min($input.first().json._wait_ms || 30000, 15000);\n\n// Synchronous delay\nconst start = Date.now();\nwhile (Date.now() - start < waitMs) {}\n\nreturn $input.all();"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1984,
+        -96
+      ],
+      "id": "d7d5555e-d21e-4f07-852e-6d04c208a684",
+      "name": "Retry Delay"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "Filter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message": {
+      "main": [
+        [
+          {
+            "node": "Update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Determine Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Web Scrapper": {
+      "main": [
+        [
+          {
+            "node": "Clean HTML",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Determine Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        []
+      ]
+    },
+    "Clean HTML": {
+      "main": [
+        [
+          {
+            "node": "Set Sender Info",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Email Content Parser": {
+      "main": [
+        []
+      ]
+    },
+    "Dynamic Retry Wait": {
+      "main": [
+        []
+      ]
+    },
+    "Mark as Permanently Failed": {
+      "main": [
+        []
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Web Scrapper",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Set Sender Info",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Index": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter": {
+      "main": [
+        [
+          {
+            "node": "Index",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Determine Status": {
+      "main": [
+        [
+          {
+            "node": "IF Can Retry",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF Can Retry": {
+      "main": [
+        [
+          {
+            "node": "Retry Delay",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Mark as Permanently Failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Sender Info": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Determine Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Retry Delay": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "87b6d3cf-1f7a-4bb3-941d-9a2df19111e0",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "6d13077896841a29608fe2168a9fcbe6b40381cbc195ad214d0b8941e803b68f"
+  },
+  "nodeGroups": [],
+  "id": "kV0hb67pcdqFcEU5",
+  "tags": []
+}
