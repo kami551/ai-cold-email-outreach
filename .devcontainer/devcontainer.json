@@ -1,0 +1,9 @@
+{
+  "name": "n8n-codespace",
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:4.0.0": {
+      "moby": false
+    }
+  },
+  "forwardPorts": [5678]
+}
