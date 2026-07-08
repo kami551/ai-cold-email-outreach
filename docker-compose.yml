@@ -1,6 +1,9 @@
 services:
   n8n:
-    image: n8nio/n8n:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: n8n-custom:latest
     container_name: n8n
     restart: unless-stopped
     ports:
@@ -9,11 +12,22 @@ services:
       - N8N_HOST=0.0.0.0
       - N8N_PORT=5678
       - N8N_PROTOCOL=https
+      - N8N_EDITOR_BASE_URL=https://curly-succotash-gx4g7x9pq47pcw6pq-5678.app.github.dev
+      - WEBHOOK_URL=https://curly-succotash-gx4g7x9pq47pcw6pq-5678.app.github.dev
+      - N8N_PUSH_BACKEND=websocket
+      - N8N_ALLOWED_ORIGINS=https://localhost:5678,https://127.0.0.1:5678,https://curly-succotash-gx4g7x9pq47pcw6pq-5678.app.github.dev
+      - N8N_SECURE_COOKIE=false
+      - N8N_DIAGNOSTICS_ENABLED=false
       - GENERIC_TIMEZONE=Asia/Karachi
       - DB_TYPE=sqlite
       - DB_STORAGE=/home/node/.n8n/database.sqlite
+      - NODE_FUNCTION_ALLOW_EXTERNAL=axios,lodash,moment,uuid
+      - NODE_FUNCTION_ALLOW_BUILTIN=crypto,fs,path
+      - N8N_COMMUNITY_PACKAGES_ENABLED=true
+      - N8N_RUNNERS_AUTH_TOKEN=7be60c5a3d42bc942b03e4590f234bc1
     volumes:
       - n8n_data:/home/node/.n8n
 
 volumes:
   n8n_data:
+  
