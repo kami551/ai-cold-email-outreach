@@ -6,6 +6,6 @@
     }
   },
   "forwardPorts": [5678],
-  "postCreateCommand": "docker compose up -d",
-  "postStartCommand": "docker compose up -d"
+  "postCreateCommand": "bash start-n8n.sh",
+  "postStartCommand": "bash start-n8n.sh"
 }
