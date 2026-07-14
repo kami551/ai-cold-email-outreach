@@ -1,6 +1,6 @@
 #!/bin/bash
 # =====================================================================
-# n8n Codespace Auto-Start Script
+# n8n Codespace Auto-Start Script (with logging)
 # =====================================================================
 # Waits for Docker daemon to be ready, then starts n8n + nginx containers.
 # Used by devcontainer.json postCreateCommand and postStartCommand.
@@ -13,6 +13,14 @@
 #
 # Confirmed by: https://github.com/devcontainers/features/issues/977
 # =====================================================================
+
+# Log all output to /tmp/start-n8n.log AND to stdout
+exec > >(tee -a /tmp/start-n8n.log) 2>&1
+echo ""
+echo "=============================================="
+echo "start-n8n.sh fired at $(date)"
+echo "User: $(whoami), PWD: $PWD, CODESPACE_NAME: ${CODESPACE_NAME:-unknown}"
+echo "=============================================="
 
 set -e
 
@@ -79,6 +87,7 @@ for i in $(seq 1 15); do
     if curl -s -o /dev/null -w "%{http_code}" http://localhost:5678 | grep -q "200\|302\|401"; then
         echo "[start-n8n] n8n is ready! (attempt $i/15)"
         echo "[start-n8n] Editor URL: https://${CODESPACE_NAME}-5678.app.github.dev"
+        echo "[start-n8n] Completed at $(date)"
         exit 0
     else
         echo "[start-n8n] n8n not responding yet (attempt $i/15), waiting 2s..."
