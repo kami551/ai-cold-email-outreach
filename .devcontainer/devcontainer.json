@@ -5,5 +5,7 @@
       "moby": false
     }
   },
-  "forwardPorts": [5678]
+  "forwardPorts": [5678],
+  "postCreateCommand": "docker compose up -d",
+  "postStartCommand": "docker compose up -d"
 }

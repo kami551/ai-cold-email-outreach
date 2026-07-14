@@ -21,6 +21,16 @@ services:
       - GENERIC_TIMEZONE=Asia/Karachi
       - DB_TYPE=sqlite
       - DB_STORAGE=/home/node/.n8n/database.sqlite
+      # NEW: Disable auto-upgrade (prevents surprise breaking changes)
+      - N8N_VERSION_CHECK=false
+      
+      # NEW: Container timezone (separate from GENERIC_TIMEZONE — affects logs)
+      - TZ=Asia/Karachi
+      
+      # NEW: Explicit encryption key for credentials
+      # Generate one with: openssl rand -hex 32
+      # Once set, DON'T change it (or credentials become unreadable)
+      - N8N_ENCRYPTION_KEY=REPLACE_WITH_GENERATED_KEY
     volumes:
       - n8n_data:/home/node/.n8n
 

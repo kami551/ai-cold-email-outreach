@@ -1,32 +1,21 @@
-# Stage 1: Build Python packages in Alpine Python image
-FROM python:3.12-alpine AS python-builder
+# =====================================================================
+# n8n Custom Image — Codespaces-optimized
+# =====================================================================
+# Single-stage build on top of the official n8n image.
+# Python is NOT included because the workflow uses only JavaScript
+# Code nodes (jsCode). If you ever add pyCode nodes, uncomment the
+# block at the bottom to re-enable Python support.
+# =====================================================================
 
-RUN pip install --no-cache-dir --root=/python-root \
-    requests \
-    numpy \
-    pandas \
-    openai \
-    anthropic \
-    python-dotenv \
-    pyyaml \
-    beautifulsoup4 \
-    lxml
-
-# Stage 2: n8n image + Python copied in
 FROM n8nio/n8n:latest
 
-USER root
+# n8n runs as the "node" user by default — no need to switch to root.
+# The base image already contains everything n8n needs to run.
 
-# Copy Python runtime from the official Alpine Python image
-COPY --from=python:3.12-alpine /usr/local/bin/python3 /usr/local/bin/python3
-COPY --from=python:3.12-alpine /usr/local/bin/python3.12 /usr/local/bin/python3.12
-COPY --from=python:3.12-alpine /usr/local/lib/python3.12 /usr/local/lib/python3.12
-COPY --from=python:3.12-alpine /usr/local/lib/libpython3.12.so* /usr/local/lib/
-
-# Copy installed Python packages (from the builder stage)
-COPY --from=python-builder /python-root /usr/local
-
-# Make sure Python shared library is discoverable
-ENV LD_LIBRARY_PATH=/usr/local/lib
-
-USER node
+# ---------------------------------------------------------------------
+# If you ever need Python for pyCode nodes, uncomment this block:
+# ---------------------------------------------------------------------
+# USER root
+# RUN apk add --no-cache python3 py3-pip ca-certificates && \
+#     update-ca-certificates
+# USER node
